@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Nav from './pages/nav';
+import Main from './pages/main';
+import OneSlider from './pages/oneSlider';
+import MultipleSlider from './pages/multipleSlider';
+import InfiniteCarousel from './pages/infiniteCarousel';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div id='appWrapper'>
+        <BrowserRouter>
+          <header className='App-header'>
+            <h1>Carousels</h1>
+          </header>
+          <Nav />
+          <main>
+            <Routes>
+              <Route path='/' element={<Main />} />
+              <Route path='/oneSlider' element={<OneSlider />} />
+              <Route path='/multipleSlider' element={<MultipleSlider />} />
+              <Route path='/infiniteCarousel' element={<InfiniteCarousel />} />
+            </Routes>
+          </main>
+          <footer>Youngseo Kangg</footer>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }
