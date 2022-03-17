@@ -160,11 +160,12 @@ table {
   color: white;
 }
 
+main {
+  display: grid;
+  place-items: center;
+}
 nav {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-
-footer {
 }
