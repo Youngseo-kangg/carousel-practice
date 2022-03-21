@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import card1 from '../assets/card1.jpg';
-import card2 from '../assets/card2.png';
-import card3 from '../assets/card3.png';
+import berries from '../assets/berries.jpeg';
+import cake from '../assets/cake.jpeg';
+import pizza from '../assets/pizza.jpeg';
+import salmon from '../assets/salmon.jpeg';
 import '../styles/oneSlider.css';
 
 function OneSlider() {
-  let cards = [card1, card2, card3];
+  let cards = [berries, cake, pizza, salmon];
   const [currentIdx, setCurrentIdx] = useState(0);
   const changeIdx = (direction) => {
     if (direction === '+') {

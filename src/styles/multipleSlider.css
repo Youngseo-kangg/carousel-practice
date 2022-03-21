@@ -1,0 +1,55 @@
+#sliderArea {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+#multipleSliderWrapper {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+
+/* 슬라이더 영역 */
+#multipleSlider {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+}
+
+#multipleSliderList {
+  position: relative;
+  left: 50%;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  width: fit-content;
+}
+
+#sliderList {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+}
+.multipleSliderItem > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 500px;
+}
+
+/* 버튼 */
+.buttonWrapper {
+  display: grid;
+  place-items: center;
+}
+#multipleSliderBeforeBtn,
+#multipleSliderAfterBtn {
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+}
