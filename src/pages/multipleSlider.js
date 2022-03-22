@@ -61,6 +61,17 @@ function MultipleSlider() {
     return index;
   }
 
+  // TODO : 복제된 슬라이드로 이동 시 원본 슬라이드로 대체 관련
+  let transitionTime = 500;
+  const transitionStyle = `transform ${transitionTime}ms ease 0s`;
+  const [slideTransition, setTransition] = useState(transitionStyle);
+  function replaceSlide(index) {
+    setTimeout(() => {
+      setTransition('');
+      setCurrentIndex(index);
+    }, transitionTime); // 0.5초 지나고 나서 인자로 들어온 index로 currentIndex 설정
+  }
+
   // TODO : 슬라이드 이동 관련
   const [currentIndex, setCurrentIndex] = useState(0);
   // * 몇번째 슬라이드를 보여줄 지 currentIndex 변경하는 함수 handleSwipe
@@ -70,11 +81,18 @@ function MultipleSlider() {
   };
   // * handleSwipe를 도와 currentIndex 범위 조정하는 함수 handleCarousel
   const handleCarousel = (index) => {
+    setCurrentIndex(index); // 일단은 바로 세팅
     // 들어온 수가 0보다 작다면 가장 마지막 slide index로
-    if (index < 0) index = cards.length - 1;
+    if (index < 0) {
+      index += endData;
+      replaceSlide(index);
+    }
     // 들어온 수가 cards.length와 크거나 같다면 가장 첫번째 slide index로
-    else if (index >= cards.length) index = 0;
-    setCurrentIndex(index);
+    else if (index >= cards.length) {
+      index -= endData;
+      replaceSlide(index);
+    }
+    setTransition(transitionStyle);
   };
 
   return (
@@ -97,6 +115,7 @@ function MultipleSlider() {
                 //   (100 / cards.length) * 0.5) // 슬라이드 1/2개 길이
                 (-100 / cards.length) * (currentIndex + 0.5)
               }%)`,
+              transition: slideTransition,
             }}
           >
             {modCards.map((el, idx) => {
