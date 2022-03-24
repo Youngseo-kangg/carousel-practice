@@ -22,11 +22,12 @@ function useWindowSize() {
 function MultipleSlider() {
   // TODO : 현재 창 사이즈 관련
   const [windowWidth, windowHeight] = useWindowSize();
-  let sliderPadding = 40;
+  const sliderPadding = 40;
+  const sliderPaddingStyle = `0 ${sliderPadding}px`;
   // * 현재 창 사이즈에서의 슬라이드의 width 구하는 getNewItemWidth
   function getNewItemWidth() {
     // windowWidth에 0.9배 - sliderPadding*2 빼준 길이로 itemWidth 변수 만들어주기
-    let itemWidth = windowWidth * 0.9 - sliderPadding * 2;
+    let itemWidth = windowWidth * 0.9 - sliderPadding * 2; // 714.7
     itemWidth = itemWidth > 1060 ? 1060 : itemWidth;
     return itemWidth;
   }
@@ -73,7 +74,7 @@ function MultipleSlider() {
   }
 
   // TODO : 슬라이드 이동 관련
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(endData);
   // * 몇번째 슬라이드를 보여줄 지 currentIndex 변경하는 함수 handleSwipe
   const handleSwipe = (direction) => {
     // setCurrentIndex((currentIndex) => currentIndex + index);
@@ -83,13 +84,13 @@ function MultipleSlider() {
   const handleCarousel = (index) => {
     setCurrentIndex(index); // 일단은 바로 세팅
     // 들어온 수가 0보다 작다면 가장 마지막 slide index로
-    if (index < 0) {
-      index += endData;
+    if (index - endData < 0) {
+      index += endData * 2;
       replaceSlide(index);
     }
     // 들어온 수가 cards.length와 크거나 같다면 가장 첫번째 slide index로
-    else if (index >= cards.length) {
-      index -= endData;
+    else if (index - endData >= cards.length) {
+      index -= endData * 2;
       replaceSlide(index);
     }
     setTransition(transitionStyle);
@@ -105,7 +106,7 @@ function MultipleSlider() {
           +
         </button>
 
-        <div id='multipleSlider'>
+        <div id='multipleSlider' style={{ padding: sliderPaddingStyle }}>
           <div
             id='multipleSliderList'
             style={{
@@ -113,7 +114,7 @@ function MultipleSlider() {
                 // -1 *
                 // ((100 / cards.length) * currentIndex + // 슬라이드 1개 길이
                 //   (100 / cards.length) * 0.5) // 슬라이드 1/2개 길이
-                (-100 / cards.length) * (currentIndex + 0.5)
+                (-100 / modCards.length) * (currentIndex + 0.5)
               }%)`,
               transition: slideTransition,
             }}
@@ -121,10 +122,15 @@ function MultipleSlider() {
             {modCards.map((el, idx) => {
               const itemIndex = getItemIndex(idx);
               return (
-                <div key={idx} className='multipleSliderItem'>
+                <div
+                  key={idx}
+                  className={`multipleSliderItem ${
+                    currentIndex === idx ? 'current-slide' : ''
+                  }`}
+                  style={{ width: newItemWidth || 'auto' }}
+                >
                   <img
-                    style={{ width: newItemWidth || 'auto' }}
-                    src={el}
+                    src={cards[itemIndex]}
                     alt={`실제 인덱스:${idx}, 재조정한 인덱스: ${itemIndex}`}
                   />
                 </div>
